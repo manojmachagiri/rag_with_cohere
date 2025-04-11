@@ -7,3 +7,4 @@ chromadb
 pydantic
 httpx
 cohere
+pysqlite3-binary
