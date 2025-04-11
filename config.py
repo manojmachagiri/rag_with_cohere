@@ -16,7 +16,7 @@ DEFAULT_MODEL = "command"  # Default model for compatibility with existing code
 
 # PDF processing settings
 DEFAULT_CHUNK_SIZE = 1000
-DEFAULT_CHUNK_OVERLAP = 600
+DEFAULT_CHUNK_OVERLAP = 400
 DEFAULT_NUM_RESULTS = 6
 
 # Vector store settings
