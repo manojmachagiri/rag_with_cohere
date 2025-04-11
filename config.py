@@ -15,9 +15,9 @@ COHERE_TIMEOUT = 60.0  # seconds
 DEFAULT_MODEL = "command"  # Default model for compatibility with existing code
 
 # PDF processing settings
-DEFAULT_CHUNK_SIZE = 2000
-DEFAULT_CHUNK_OVERLAP = 1000
-DEFAULT_NUM_RESULTS = 10
+DEFAULT_CHUNK_SIZE = 1000
+DEFAULT_CHUNK_OVERLAP = 600
+DEFAULT_NUM_RESULTS = 6
 
 # Vector store settings
 VECTOR_DB_DIR = os.path.join(os.getcwd(), "chroma_db")
