@@ -67,26 +67,26 @@ def clear_vector_store(collection_name: str = COLLECTION_NAME) -> bool:
         logger.error(f"Error clearing vector store: {e}")
         return False
 
+def ensure_vector_store_directory():
+    """Ensure vector store directory exists and has proper permissions."""
+    persist_directory = VECTOR_DB_DIR
+    try:
+        # Create directory if it doesn't exist
+        os.makedirs(persist_directory, exist_ok=True)
+        # Set write permissions
+        os.chmod(persist_directory, 0o755)
+        return True
+    except Exception as e:
+        logger.error(f"Error setting up vector store directory: {e}")
+        return False
+
 def create_vector_store(chunks: List[str], embeddings: Optional[Embeddings] = None,
                        collection_name: str = COLLECTION_NAME) -> Chroma:
-    """Create a vector store from text chunks.
-
-    Args:
-        chunks: List of text chunks to store
-        embeddings: Optional embeddings model (defaults to Ollama)
-        collection_name: Name for the vector collection
-
-    Returns:
-        Chroma: The vector store instance
-
-    Raises:
-        Exception: If there's an error creating the vector store
-    """
+    """Create a vector store from text chunks."""
     logger.info(f"Creating vector store with {len(chunks)} chunks")
     try:
-        # Create a directory for the database if it doesn't exist
-        persist_directory = VECTOR_DB_DIR
-        os.makedirs(persist_directory, exist_ok=True)
+        # Ensure directory exists with proper permissions
+        ensure_vector_store_directory()
 
         # Clear existing collection to avoid dimension mismatch
         clear_vector_store(collection_name)
@@ -96,11 +96,11 @@ def create_vector_store(chunks: List[str], embeddings: Optional[Embeddings] = No
             embeddings = get_embeddings_model()
 
         # Create and persist the vector store
-        logger.info(f"Creating Chroma vector store in {persist_directory}")
+        logger.info(f"Creating Chroma vector store in {VECTOR_DB_DIR}")
         vectordb = Chroma.from_texts(
             texts=chunks,
             embedding=embeddings,
-            persist_directory=persist_directory,
+            persist_directory=VECTOR_DB_DIR,
             collection_name=collection_name
         )
         vectordb.persist()
@@ -172,3 +172,5 @@ def similarity_search(vectordb: Chroma, query: str, k: int = DEFAULT_NUM_RESULTS
     except Exception as e:
         logger.error(f"Error searching vector store: {e}")
         raise Exception(f"Error searching vector store: {e}")
+
+
