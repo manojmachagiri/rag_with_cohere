@@ -8,6 +8,9 @@ This module provides functions and classes for:
 
 import os
 import shutil
+import sys
+import pysqlite3
+sys.modules['sqlite3'] = pysqlite3
 from typing import List, Dict, Any, Optional, Union, Tuple
 
 from langchain_community.vectorstores import Chroma
