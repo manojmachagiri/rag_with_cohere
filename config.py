@@ -20,7 +20,8 @@ DEFAULT_CHUNK_OVERLAP = 400
 DEFAULT_NUM_RESULTS = 6
 
 # Vector store settings
-VECTOR_DB_DIR = os.path.join(os.getcwd(), "chroma_db")
+# VECTOR_DB_DIR = os.path.join(os.getcwd(), "chroma_db")
+VECTOR_DB_DIR = os.path.join(os.path.expanduser("~"), "chroma_db")  # Store in user's home directory
 COLLECTION_NAME = "pdf_collection"
 
 # System prompts
